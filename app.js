@@ -48,7 +48,13 @@ function inputNum(n){
 }
 
 function inputOp(op){
-    screenExp.innerHTML += op
+    const convertMap = {
+        "÷": "/",
+        "×": "*",
+        "+": "+",
+        "-": "-",
+    }
+    screenExp.innerHTML += convertMap[op]
 }
 
 for(let i = 0; i < btnNum.length; i++)
