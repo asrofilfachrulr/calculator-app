@@ -11,15 +11,15 @@
 </head>
 <body>
     <div class="container">
-        <div class= "card app">
+        <div id="app" class= "card app">
             <div class="row">
                 <div class="col col-12 screen">
                     <div class="row">
                         <label class="switch theme-toggle">
                             <input type="checkbox" id="togBtn">
                             <div class="slider round">
-                             <span class="on">ON</span>
-                             <span class="off">OFF</span>
+                                <img id="light-icon" class="light-mode-icon theme-icons" src="sun.png">
+                                <span class="right"><img id="dark-icon" class="dark-mode-icon theme-icons" src="moon.png"></span>
                             </div>
                         </label>
                     </div>
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="col col-12">
-                    <div class="card pad">
+                    <div id="pad" class="card pad">
                         <div class="card-body">
                             <div class="row pad-row">
                                 <div class="col col-3">
@@ -46,7 +46,7 @@
                                     <button id="btn-percent" class="btn btn-top">%</button>
                                 </div>
                                 <div class="col col-3">
-                                    <button id="btn-div" class="btn btn-op">÷</button>
+                                    <button id="btn-div" class="btn btn-op btn-side">÷</button>
                                 </div>
                             </div>
                             <div class="row pad-row">
@@ -60,7 +60,7 @@
                                     <button id="btn-nine" class="btn btn-num">9</button>
                                 </div>
                                 <div class="col col-3">
-                                    <button id="btn-mult" class="btn btn-op">×</button>
+                                    <button id="btn-mult" class="btn btn-op btn-side">×</button>
                                 </div>
                             </div>
                             <div class="row pad-row">
@@ -74,7 +74,7 @@
                                     <button id="btn-six" class="btn btn-num">6</button>
                                 </div>
                                 <div class="col col-3">
-                                    <button id="btn-subs" class="btn btn-op"> - </button>
+                                    <button id="btn-subs" class="btn btn-op btn-side"> - </button>
                                 </div>
                             </div>
                             <div class="row pad-row">
@@ -88,7 +88,7 @@
                                     <button id="btn-three" class="btn btn-num">3</button>
                                 </div>
                                 <div class="col col-3">
-                                    <button id="btn-plus" class="btn btn-op">+</button>
+                                    <button id="btn-plus" class="btn btn-op btn-side">+</button>
                                 </div>
                             </div>
                             <div class="row pad-row">
@@ -102,7 +102,7 @@
                                     <button id="btn-delim" class="btn btn-num">.</button>
                                 </div>
                                 <div class="col col-3">
-                                    <button id="btn-equal" class="btn"> = </button>
+                                    <button id="btn-equal" class="btn btn-side"> = </button>
                                 </div>
                             </div>
                         </div>

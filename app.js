@@ -7,6 +7,14 @@ const btnC = document.getElementById("btn-C")
 const btnSign = document.getElementById("btn-sign")
 const btnPercent = document.getElementById("btn-percent")
 const btnEqual = document.getElementById("btn-equal")
+const togBtn = document.getElementById("togBtn")
+const lightIcon = document.getElementById("light-icon")
+const darkIcon = document.getElementById("dark-icon")
+const sliderBefore = document.querySelector(".slider:before")
+
+const calculatorApp = document.getElementById("app")
+const buttons = document.getElementsByClassName("btn")
+const pad = document.getElementById("pad")
 
 
 function clearAll(){
@@ -61,6 +69,8 @@ const keyMap = {
 for(let i = 0; i <= 9; i++)
     keyMap[i.toString()] = 'num'
 
+keyMap['.'] = 'num' // same behaviour
+
 document.onkeydown = function(b) {
     console.log(b.key, typeof b.key)
     
@@ -76,3 +86,39 @@ document.onkeydown = function(b) {
     else if(key === '%')
         calculatePercent()
 }
+
+function changeTheme(mode){
+    // light is true
+    if(mode) {
+        darkIcon.style.visibility = "hidden"
+        lightIcon.style.visibility = "unset"
+        
+        calculatorApp.style.color = "black"
+        calculatorApp.style.backgroundColor = "#fefefe"
+        screenExpPast.style.color = "rgb(168, 168, 168)"
+        pad.style.backgroundColor = "#f9f9f9"
+
+        for(let i = 0; i < buttons.length; i++){
+            buttons[i].style.backgroundColor = "#f8f6fb"
+            buttons[i].style.color = "black"
+        }
+    } else {
+        lightIcon.style.visibility = "hidden"
+        darkIcon.style.visibility = "unset"
+
+        calculatorApp.style.color = "white"
+        calculatorApp.style.backgroundColor = "#22252c"
+        screenExpPast.style.color = "rgb(168, 168, 168)"
+        pad.style.backgroundColor = "#2a2d36"
+
+        for(let i = 0; i < buttons.length; i++){
+            buttons[i].style.backgroundColor = "#282b32"
+            buttons[i].style.color = "white"
+        }
+    }
+}
+
+togBtn.addEventListener('click', () => {
+    console.log(togBtn.checked)
+    changeTheme(togBtn.checked)
+})
