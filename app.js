@@ -31,6 +31,9 @@ btnC.addEventListener('click', clear)
 
 function calculate(){
     screenExpPast.innerHTML = screenExp.innerHTML
+    screenExp.innerHTML = screenExp.innerHTML.replace(/÷/g, "/")
+    screenExp.innerHTML = screenExp.innerHTML.replace(/×/g, "*")
+    
     screenExp.innerHTML = eval(screenExp.innerHTML)
 }
 
@@ -48,13 +51,7 @@ function inputNum(n){
 }
 
 function inputOp(op){
-    const convertMap = {
-        "÷": "/",
-        "×": "*",
-        "+": "+",
-        "-": "-",
-    }
-    screenExp.innerHTML += convertMap[op]
+    screenExp.innerHTML += op
 }
 
 for(let i = 0; i < btnNum.length; i++)
