@@ -7,6 +7,7 @@ const btnC = document.getElementById("btn-C")
 const btnSign = document.getElementById("btn-sign")
 const btnPercent = document.getElementById("btn-percent")
 const btnEqual = document.getElementById("btn-equal")
+const btnDelim = document.getElementById("btn-delim")
 const togBtn = document.getElementById("togBtn")
 const lightIcon = document.getElementById("light-icon")
 const darkIcon = document.getElementById("dark-icon")
@@ -29,12 +30,15 @@ function clear() {
 btnAC.addEventListener('click', clearAll)
 btnC.addEventListener('click', clear)
 
+var isEqualPressed = false
+
 function calculate(){
     screenExpPast.innerHTML = screenExp.innerHTML
     screenExp.innerHTML = screenExp.innerHTML.replace(/÷/g, "/")
     screenExp.innerHTML = screenExp.innerHTML.replace(/×/g, "*")
     
     screenExp.innerHTML = eval(screenExp.innerHTML)
+    isEqualPressed = true
 }
 
 function calculatePercent(){
@@ -43,7 +47,12 @@ function calculatePercent(){
 }
 
 function inputNum(n){
-    if(screenExp.innerHTML === '0' && n === '0')
+    if(isEqualPressed){
+        screenExp.innerHTML = n
+        isEqualPressed = false
+        return
+    }
+    if(screenExp.innerHTML.search(/0$/) !== -1 && n === '0')
         return
     else if(screenExp.innerHTML === '0')
         screenExp.innerHTML = ''
@@ -51,6 +60,8 @@ function inputNum(n){
 }
 
 function inputOp(op){
+    if(isEqualPressed)
+        isEqualPressed = false
     screenExp.innerHTML += op
 }
 
@@ -69,6 +80,11 @@ const keyMap = {
     '+': 'op', '-': 'op'
 }
 
+const opConvert = {
+    '*': '×', '/': '÷',
+    '+': '+', '-': '-'
+}
+
 for(let i = 0; i <= 9; i++)
     keyMap[i.toString()] = 'num'
 
@@ -80,12 +96,12 @@ document.onkeydown = function(b) {
     const key = b.key
     if(key === 'Backspace')
         clear()
-    else if (key === 'Enter') 
+    else if (key === '=') 
         calculate()
     else if(keyMap[key] === 'num')
         inputNum(key)
     else if(keyMap[key] === 'op')
-        inputOp(key)
+        inputOp(opConvert[key])
     else if(key === '%')
         calculatePercent()
 }
@@ -125,3 +141,30 @@ togBtn.addEventListener('click', () => {
     console.log(togBtn.checked)
     changeTheme(togBtn.checked)
 })
+
+function toggleSign(){
+    let isPositive = false
+    screenExp.innerHTML = screenExp.innerHTML.replace(/-{0}\d+$/, seq => {
+        isPositive = true
+        console.log("positive to negative")
+        return seq === '0' ? seq : `(-${seq})`
+    })
+    if(!isPositive)
+        screenExp.innerHTML = screenExp.innerHTML.replace(/\(-\d+\)|^-\d+$/, seq => {
+            seq = seq.replace('-', '')
+            seq = seq.replace('(', '')
+            seq = seq.replace(')', '')
+            console.log("negative to positive")
+            return seq
+        })
+}
+
+btnSign.addEventListener('click', toggleSign)
+
+function addDelim() {
+    if(screenExp.innerHTML.search(/\.\d*$/) > - 1) return
+    else if(screenExp.innerHTML.search(/(\+|-|×|÷)$/) | isEqualPressed)
+        screenExp.innerHTML += "0."
+}
+
+btnDelim.addEventListener('click', addDelim)
