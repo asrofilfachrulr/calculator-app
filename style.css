@@ -36,6 +36,7 @@ body {
 #screen-exp,
 #screen-exp-past {
   text-align: end;
+  padding-left: 10px;
 }
 
 #screen-exp-past {
