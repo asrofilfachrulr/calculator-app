@@ -39,6 +39,7 @@ function calculate(){
     
     screenExp.innerHTML = eval(screenExp.innerHTML)
     isEqualPressed = true
+    console.log("isEqualPressed", isEqualPressed)
 }
 
 function calculatePercent(){
@@ -74,37 +75,6 @@ for(let i = 0; i < btnOp.length; i++)
 btnEqual.addEventListener('click', calculate)
 
 btnPercent.addEventListener('click', calculatePercent)
-
-const keyMap = {
-    '*': 'op', '/': 'op',
-    '+': 'op', '-': 'op'
-}
-
-const opConvert = {
-    '*': '×', '/': '÷',
-    '+': '+', '-': '-'
-}
-
-for(let i = 0; i <= 9; i++)
-    keyMap[i.toString()] = 'num'
-
-keyMap['.'] = 'num' // same behaviour
-
-document.onkeydown = function(b) {
-    console.log(b.key, typeof b.key)
-    
-    const key = b.key
-    if(key === 'Backspace')
-        clear()
-    else if (key === '=') 
-        calculate()
-    else if(keyMap[key] === 'num')
-        inputNum(key)
-    else if(keyMap[key] === 'op')
-        inputOp(opConvert[key])
-    else if(key === '%')
-        calculatePercent()
-}
 
 function changeTheme(mode){
     // light is true
@@ -162,9 +132,49 @@ function toggleSign(){
 btnSign.addEventListener('click', toggleSign)
 
 function addDelim() {
+    if(isEqualPressed){
+        screenExp.innerHTML = "0."
+        isEqualPressed = false
+        return
+    }
+
     if(screenExp.innerHTML.search(/\.\d*$/) > - 1) return
-    else if(screenExp.innerHTML.search(/(\+|-|×|÷)$/) | isEqualPressed)
+    else if(screenExp.innerHTML.search(/\D$/) > -1)
         screenExp.innerHTML += "0."
+    else
+        screenExp.innerHTML += "."
 }
 
 btnDelim.addEventListener('click', addDelim)
+
+const keyMap = {
+    '*': 'op', '/': 'op',
+    '+': 'op', '-': 'op'
+}
+
+const opConvert = {
+    '*': '×', '/': '÷',
+    '+': '+', '-': '-'
+}
+
+for(let i = 0; i <= 9; i++)
+    keyMap[i.toString()] = 'num'
+
+document.onkeydown = function(b) {
+    console.log(b.key, typeof b.key)
+    
+    const key = b.key
+    if(key === 'Backspace')
+        clear()
+    else if (key === '=') 
+        calculate()
+    else if(keyMap[key] === 'num')
+        inputNum(key)
+    else if(keyMap[key] === 'op')
+        inputOp(opConvert[key])
+    else if(key === '%')
+        calculatePercent()
+    else if(key ==='.'){
+        addDelim()
+    }
+}
