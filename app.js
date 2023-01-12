@@ -57,6 +57,10 @@ function inputNum(n){
         return
     else if(screenExp.innerHTML === '0')
         screenExp.innerHTML = ''
+    else if(screenExp.innerHTML.search(/\)$/) > -1) {
+        screenExp.innerHTML = screenExp.innerHTML.substring(0, screenExp.innerHTML.length-1) + n + ")"
+        return
+    }    
     screenExp.innerHTML += n
 }
 
@@ -114,14 +118,16 @@ togBtn.addEventListener('click', () => {
 
 function toggleSign(){
     let isPositive = false
-    screenExp.innerHTML = screenExp.innerHTML.replace(/-{0}\d+$/, seq => {
+    screenExp.innerHTML = screenExp.innerHTML.replace(/-{0}\d*\.*\d+\.*$/, seq => {
         isPositive = true
         console.log("positive to negative")
         return seq === '0' ? seq : `(-${seq})`
     })
     if(!isPositive)
-        screenExp.innerHTML = screenExp.innerHTML.replace(/\(-\d+\)|^-\d+$/, seq => {
-            seq = seq.replace('-', '')
+        screenExp.innerHTML = screenExp.innerHTML.replace(/\(-\d*\.*\d+\.*\)$|^-\d*\.*\d+\.*$/, seq => {
+            seq = seq.replace(/-/g, '')
+            seq = seq.replace(/-/g, '')
+
             seq = seq.replace('(', '')
             seq = seq.replace(')', '')
             console.log("negative to positive")
@@ -138,7 +144,10 @@ function addDelim() {
         return
     }
 
-    if(screenExp.innerHTML.search(/\.\d*$/) > - 1) return
+    if(screenExp.innerHTML.search(/\.\d*$/) > -1) return
+    else if(screenExp.innerHTML.search(/\)$/) > -1 ) {
+        screenExp.innerHTML = screenExp.innerHTML.substring(0, screenExp.innerHTML.length-1) + "." + ")" 
+    } 
     else if(screenExp.innerHTML.search(/\D$/) > -1)
         screenExp.innerHTML += "0."
     else
